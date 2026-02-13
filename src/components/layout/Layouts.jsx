@@ -293,6 +293,7 @@ const Layout = () => {
           fontWeight="bold"
           sx={{
             fontSize: isExtremeSmall ? '0.8rem' : '1.25rem',
+            color: theme.palette.text.primary,
           }}
         >
           {isExtremeSmall ? 'C-Tech' : 'C-Tech Soft Tools'}
@@ -400,6 +401,7 @@ const Layout = () => {
               primary={isDark ? 'Light Mode' : 'Dark Mode'} 
               primaryTypographyProps={{
                 fontSize: isExtremeSmall ? '0.85rem' : '1rem',
+                color: 'text.primary',
               }}
             />
           </ListItem>
@@ -430,12 +432,23 @@ const Layout = () => {
             </IconButton>
           )}
           
+          {/* Show C-Tech Soft Tools for mobile, page name for desktop */}
           <Typography 
             variant="h6" 
             noWrap 
             component="div" 
             sx={{ 
               flexGrow: 1,
+              fontWeight: 600,
+              color: theme.palette.text.primary,
+              background: isMobile ? (
+                isDark 
+                  ? 'linear-gradient(135deg, #e0e0e0, #ffffff, #9aa0a6)' 
+                  : 'linear-gradient(135deg, #2c3e50, #1a2634, #0A0C12)'
+              ) : 'none',
+              WebkitBackgroundClip: isMobile ? 'text' : 'none',
+              WebkitTextFillColor: isMobile ? 'transparent' : 'inherit',
+              textShadow: isMobile && !isDark ? '0 2px 4px rgba(0,0,0,0.1)' : 'none',
               fontSize: {
                 xs: '1rem',
                 sm: '1.25rem',
@@ -444,7 +457,7 @@ const Layout = () => {
               },
             }}
           >
-            {navigationItems.find(item => item.path === location.pathname)?.name || 'Dashboard'}
+            {isMobile ? 'C-Tech Soft Tools' : (navigationItems.find(item => item.path === location.pathname)?.name || 'Dashboard')}
           </Typography>
           
           <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1 } }}>
@@ -456,6 +469,9 @@ const Layout = () => {
                   component={motion.button}
                   whileTap={{ scale: 0.9 }}
                   size={isExtremeSmall ? 'small' : 'medium'}
+                  sx={{
+                    color: theme.palette.text.primary,
+                  }}
                 >
                   {isDark ? <LightModeIcon fontSize={isExtremeSmall ? 'small' : 'medium'} /> : <DarkModeIcon fontSize={isExtremeSmall ? 'small' : 'medium'} />}
                 </IconButton>
@@ -473,6 +489,14 @@ const Layout = () => {
               value={bottomNavValue}
               onChange={handleBottomNavChange}
               showLabels={!isExtremeSmall}
+              sx={{
+                '& .MuiBottomNavigationAction-root': {
+                  color: theme.palette.text.secondary,
+                  '&.Mui-selected': {
+                    color: theme.palette.primary.main,
+                  },
+                },
+              }}
             >
               {mobileNavigationItems.map((item) => (
                 <StyledBottomNavigationAction
@@ -498,6 +522,9 @@ const Layout = () => {
         }}
         sx={{
           display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': {
+            backgroundColor: theme.palette.background.paper,
+          },
         }}
       >
         {drawer}
@@ -517,6 +544,7 @@ const Layout = () => {
                 width: drawerWidth,
                 border: 'none',
                 boxShadow: 2,
+                backgroundColor: theme.palette.background.paper,
               },
             }}
           >

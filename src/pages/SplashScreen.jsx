@@ -25,7 +25,7 @@ const SplashScreen = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#0A0C12',
+        background: 'white',
         zIndex: 9999,
         margin: 0,
         padding: 0,
