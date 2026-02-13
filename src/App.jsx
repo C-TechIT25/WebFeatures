@@ -8,8 +8,7 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { ToastProvider } from './context/ToastContext';
 // import { AuthProvider } from './context/AuthContext';
 import { lightTheme, darkTheme } from './theme';
-
-import Layout from './components/Layout/Layout';
+import Layout from './components/layout/Layouts';
 import Home from './pages/Home';
 import ImageConverter from './features/converter/ImageConverter';
 import BgRemover from './features/bg-remover/BgRemover';
