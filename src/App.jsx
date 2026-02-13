@@ -14,7 +14,7 @@ import ImageConverter from './features/converter/ImageConverter';
 import BgRemover from './features/bg-remover/BgRemover';
 import PdfEditor from './features/pdf-editor/PdfEditor';
 import SmartTool from './features/smart-tool/SmartTool';
-import SplashScreen from './pages/SplashScreen'; // Create this component
+import SplashScreen from './pages/SplashScreen';
 
 const AppContent = () => {
   const { isDark } = useTheme();
@@ -44,13 +44,23 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    // Always show splash screen on every load/refresh
-    const timer = setTimeout(() => {
+    // Check if this is the first load in the current session
+    const hasLoadedBefore = sessionStorage.getItem('appHasLoaded');
+    
+    if (hasLoadedBefore) {
+      // If already loaded in this session, don't show splash
       setShowSplash(false);
-    }, 4000); // 3 seconds
+    } else {
+      // First load in this session - show splash for 4 seconds
+      const timer = setTimeout(() => {
+        setShowSplash(false);
+        // Mark that the app has loaded in this session
+        sessionStorage.setItem('appHasLoaded', 'true');
+      }, 4000);
 
-    return () => clearTimeout(timer);
-  }, []);
+      return () => clearTimeout(timer);
+    }
+  }, []); // Empty dependency array means this runs once on mount
 
   if (showSplash) {
     return <SplashScreen />;
